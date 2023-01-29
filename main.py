@@ -54,7 +54,7 @@ if __name__ == '__main__':
                         help='Show skeleton pose.')
     par.add_argument('--save_out', type=str, default='',
                         help='Save display to video file.')
-    par.add_argument('--device', type=str, default='cpu',
+    par.add_argument('--device', type=str, default='cuda',
                         help='Device to run model on cpu or cuda.')
     args = par.parse_args()
 
