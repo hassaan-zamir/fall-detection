@@ -17,7 +17,7 @@ from ActionsEstLoader import TSSTG
 
 #source = '../Data/test_video/test7.mp4'
 #source = '../Data/falldata/Home/Videos/video (2).avi'  # hard detect
-source = '../Data/falldata/Home/Videos/video (1).avi'
+source = 'rtsp://10.61.77.78:5540/ch0'
 #source = 2
 
 
@@ -39,14 +39,14 @@ def kpt2bbox(kpt, ex=20):
 
 
 if __name__ == '__main__':
-    par = argparse.ArgumentParser(description='Human Fall Detection Demo.')
+    par = argparse.ArgumentParser(description='Human Fall Detection.')
     par.add_argument('-C', '--camera', default=source,  # required=True,  # default=2,
                         help='Source of camera or video file path.')
     par.add_argument('--detection_input_size', type=int, default=384,
                         help='Size of input in detection model in square must be divisible by 32 (int).')
     par.add_argument('--pose_input_size', type=str, default='224x160',
                         help='Size of input in pose model must be divisible by 32 (h, w)')
-    par.add_argument('--pose_backbone', type=str, default='resnet50',
+    par.add_argument('--pose_backbone', type=str, default='resnet101',
                         help='Backbone model for SPPE FastPose model.')
     par.add_argument('--show_detected', default=False, action='store_true',
                         help='Show all bounding box from detection.')
