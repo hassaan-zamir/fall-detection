@@ -1,3 +1,5 @@
 .venv/
 .Models/
 .__pychache__/
+*.pyc
+*.pth
