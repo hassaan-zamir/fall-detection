@@ -15,8 +15,7 @@ from fn import draw_single
 from Track.Tracker import Detection, Tracker
 from ActionsEstLoader import TSSTG
 
-#source = '../Data/test_video/test7.mp4'
-#source = '../Data/falldata/Home/Videos/video (2).avi'  # hard detect
+from helperfunctions import *
 source = 'rtsp://10.61.77.78:5540/ch0'
 #source = 2
 
@@ -59,6 +58,12 @@ if __name__ == '__main__':
     args = par.parse_args()
 
     device = args.device
+
+    #CHECK FOR MODEL WEIGHTS
+    download_weights()
+
+    #CREATING DB CONNECTION
+    DB_CLIENT = create_db_connection()
 
     # DETECTION MODEL.
     inp_dets = args.detection_input_size
@@ -152,6 +157,7 @@ if __name__ == '__main__':
                 action_name = action_model.class_names[out[0].argmax()]
                 action = '{}: {:.2f}%'.format(action_name, out[0].max() * 100)
                 if action_name == 'Fall Down':
+                    insert_image_into_mongodb(frame,DB_CLIENT)
                     clr = (255, 0, 0)
                 elif action_name == 'Lying Down':
                     clr = (255, 200, 0)
@@ -172,7 +178,7 @@ if __name__ == '__main__':
                             (10, 20), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1)
         frame = frame[:, :, ::-1]
         fps_time = time.time()
-
+        cv2.imshow("frame",frame)
         if outvid:
             writer.write(frame)
 
